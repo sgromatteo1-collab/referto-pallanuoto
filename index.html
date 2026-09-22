@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="theme-color" content="#07111f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Referto">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><link rel="apple-touch-icon" href="icon-180.png">
+<title>Referto Pallanuoto</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-logo"><img id="headerLogo" class="hidden" alt="Logo società"><span id="headerLogoFallback">WP</span></div><div><span class="eyebrow">BORDO VASCA</span><h1 id="appTitle">Referto Pallanuoto</h1></div></div>
+  <div class="season-control"><span>STAGIONE</span><select id="seasonSelect" aria-label="Stagione"></select><button id="addSeasonBtn" class="icon-btn season-mini" title="Nuova stagione">+</button><button id="renameSeasonBtn" class="icon-btn season-mini" title="Rinomina stagione">✎</button><button id="deleteSeasonBtn" class="icon-btn season-mini danger-icon" title="Elimina stagione">×</button></div><div class="top-actions"><button id="saveMatchBtn" class="save-top-btn" title="Salva partita">✓ <span>Salva</span></button><button id="backupExport" class="icon-btn" title="Esporta backup">⇩</button><button id="backupImportBtn" class="icon-btn" title="Importa backup">⇧</button><input id="backupImport" type="file" accept="application/json" class="hidden"><button id="settingsBtn" class="icon-btn" title="Impostazioni">⚙</button><span id="saveStatus" class="save-status">Auto-salvataggio</span></div>
+</header>
+<nav class="tabs"><button id="tabMatch" class="tab active">PARTITA</button><button id="tabStats" class="tab">STATISTICHE</button><button id="tabArchive" class="tab">ARCHIVIO</button></nav>
+<main>
+<section id="matchPage" class="page">
+  <div class="hero glass">
+    <div class="team-card"><div class="logo"><img id="teamLogo" class="hidden"><span id="teamLogoFallback">WP</span></div><div><span class="label">CASA</span><h2 id="teamNameView">Squadra</h2></div></div>
+    <div class="versus"><span>VS</span><strong id="scoreView">0 — 0</strong><small id="matchMetaView">Inserisci anagrafica</small></div>
+    <div class="team-card right"><div><span class="label">OSPITI</span><h2 id="opponentNameView">Avversaria</h2></div><div class="logo"><img id="opponentLogo" class="hidden"><span id="opponentLogoFallback">AV</span></div></div>
+  </div>
+  <div class="toolbar"><button id="matchDataBtn" class="action primary">▦ <span>Anagrafica incontro</span></button><button id="homeAwayBtn" class="action">⇄ <span id="homeAwayText">Siamo CASA</span></button><button id="convocationBtn" class="action">👥 Convocate <b id="convCount">0/15</b></button><button id="newMatchBtn" class="action danger">＋ Nuova</button></div>
+
+  <section class="score-panel glass">
+    <div class="section-title"><div><span class="label">RISULTATO LIVE</span><h2>Goal e parziali</h2></div><span id="periodBadge" class="badge">1° TEMPO</span></div>
+    <div class="score-main"><div class="big-score"><span id="scoreTeamLabel">CASA</span><strong id="homeScore">0</strong></div><div class="score-sep">:</div><div class="big-score"><span id="scoreOppLabel">OSPITI</span><strong id="awayScore">0</strong></div></div>
+    <div id="periods" class="periods"></div>
+    <div class="period-select"><button data-period="1" class="period active">1°</button><button data-period="2" class="period">2°</button><button data-period="3" class="period">3°</button><button data-period="4" class="period">4°</button></div>
+  </section>
+
+  <section class="timeouts glass"><div class="section-title"><div><span class="label">TIME-OUT</span><h2>Massimo 2 per partita</h2></div><span class="muted">Inserisci tempo e minuto</span></div><div class="timeout-grid" id="timeoutGrid"></div></section>
+
+  <section class="glass roster"><div class="section-title"><div><span class="label">ROSA CONVOCATA</span><h2>Atlete</h2><p>Tocca un'atleta per registrare un evento.</p></div><button id="manageRosterBtn" class="small-btn">Gestisci rosa</button></div><div id="players" class="players"></div></section>
+  <section class="glass events"><div class="section-title"><div><span class="label">LIVE</span><h2>Eventi</h2></div><span id="eventCount" class="badge">0</span></div><div id="eventLog" class="event-log"></div></section>
+</section>
+
+<section id="statsPage" class="page hidden">
+ <div class="stats-head glass"><div><span class="label">ANALISI</span><h2>Statistiche partita</h2><p>Riepilogo automatico dagli eventi registrati.</p></div><div class="export-actions"><button id="exportPdfBtn" class="action primary">▣ PDF A4</button><button id="exportExcelBtn" class="action">▤ Excel</button><button id="shareBtn" class="action">Condividi</button></div></div>
+ <section class="glass saved-stats-section"><div class="section-title"><div><span class="label">STORICO</span><h2>Statistiche di più partite</h2><p>Seleziona le partite salvate che vuoi confrontare.</p></div></div><div id="savedStatsMatches" class="saved-stats-matches"></div><div id="savedStatsSummary" class="stats-summary compact"></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Avversaria</th><th>Goal fatti</th><th>Goal subiti</th><th>Tiri</th><th>Assist goal</th><th>Esp. contro</th><th>Esp. a favore</th></tr></thead><tbody id="savedStatsTable"></tbody></table></div></section>
+ <div id="statsSummary" class="stats-summary"></div>
+ <section class="glass"><div class="section-title"><div><span class="label">PARZIALI</span><h2>Risultati per tempo</h2></div></div><div id="statsPeriods" class="period-stats"></div></section>
+ <section class="glass"><div class="section-title"><div><span class="label">SITUAZIONI</span><h2>Goal fatti e sbagliati</h2></div></div><div id="situationStats" class="situation-stats"></div></section>
+ <section class="glass"><div class="section-title"><div><span class="label">DISCIPLINA</span><h2>Espulsioni prese dalle atlete</h2></div></div><div id="exclusionStats" class="exclusion-stats"></div></section>
+ <section class="glass"><div class="section-title"><div><span class="label">ATLETE</span><h2>Statistiche individuali</h2></div></div><div class="table-scroll"><table><thead><tr><th>Atleta</th><th>Goal</th><th>Tiri</th><th>%</th><th>+ uomo</th><th>Pari</th><th>Controp.</th><th>Assist</th><th>Esp.</th></tr></thead><tbody id="statsTable"></tbody></table></div></section>
+</section>
+
+<section id="archivePage" class="page hidden"><section class="glass"><div class="section-title"><div><span class="label">ARCHIVIO · <span id="currentSeasonLabel">STAGIONE</span></span><h2>Partite salvate</h2><p>Apri, elimina o esporta i dati della stagione selezionata.</p></div></div><div id="archiveList"></div></section></section>
+</main>
+
+<dialog id="eventDialog"><div class="dialog"><button class="close" data-close="eventDialog">×</button><div class="athlete-head"><span id="eventCap" class="cap">1</span><div><span class="label">EVENTO</span><h2 id="eventAthlete">Atleta</h2><small id="eventRole">Atleta</small></div></div><div class="segmented" id="eventKinds"><button data-kind="shot" class="selected">TIRO / GOAL</button><button data-kind="exclusion">ESPULSIONE</button><button data-kind="assist">ASSIST</button></div>
+<div id="shotPanel"><div class="label block">ESITO</div><div class="choice-grid" id="shotChoices"></div><div class="label block">SITUAZIONE</div><div class="choice-grid" id="situationChoices"><button data-situation="even">UOMINI PARI</button><button data-situation="power">SUPERIORITÀ</button><button data-situation="counter">CONTROPIEDE</button></div></div>
+<div id="exclusionPanel" class="hidden"><div class="label block">ESPULSIONE</div><div class="choice-grid exclusion-side"><button data-exclusion-side="against">PRESA CONTRO</button><button data-exclusion-side="for">PRESA A FAVORE</button></div><div class="label block">SANZIONE</div><div class="choice-grid" id="sanctionChoices"><button data-sanction="ET">E.T.</button><button data-sanction="TR">T.R.</button><button data-sanction="EDCS">E.D. C.S.</button><button data-sanction="EDSS">E.D. S.S.</button></div><div class="event-warning">Le espulsioni <b>prese contro</b> vengono conteggiate nel controllo <b>3/3</b> dell’atleta.</div></div>
+<div id="assistPanel" class="hidden"><div class="label block">TIPO DI ASSIST</div><div class="choice-grid assist-grid"><button class="selected" data-assist="goal">ASSIST GOAL</button><button data-assist="wrong">ASSIST SBAGLIATO</button><button data-assist="exclusion">ASSIST PER ESPULSIONE</button><button data-assist="penalty">ASSIST PER RIGORE</button></div></div>
+<div class="two-col"><label><span>Tempo</span><select id="eventPeriod"><option value="1">1° tempo</option><option value="2">2° tempo</option><option value="3">3° tempo</option><option value="4">4° tempo</option></select></label><label><span>Minuto</span><input id="eventTime" maxlength="5" inputmode="numeric" placeholder="04:20"></label></div>
+<label><span>Nota</span><input id="eventNote" placeholder="Facoltativa"></label><div class="dialog-actions"><button id="deleteEvent" class="danger-btn">Elimina</button><button id="saveEvent" class="primary-btn">Salva evento</button></div></div></dialog>
+
+<dialog id="matchDialog"><div class="dialog wide"><button class="close" data-close="matchDialog">×</button><span class="label">ANAGRAFICA INCONTRO</span><h2>Dati della singola partita</h2><div class="form-grid"><label>Data<input id="mDate" type="date"></label><label>Ora partita<input id="mTime" type="time"></label><label>Tipo campionato<select id="mCompetitionType"><option value="">Seleziona</option><option>Campionato</option><option>Coppa Italia</option><option>Supercoppa</option><option>Play-off</option><option>Play-out</option><option>Torneo</option><option>Amichevole</option><option>Altro</option></select></label><label>Campionato / Girone<input id="mCompetition" placeholder="Serie A1 Femminile · Girone ..."></label><label class="span2">Incontro<input id="mEncounter" placeholder="Squadra di casa vs Squadra ospite"></label><label class="span2">Impianto / Piscina<input id="mFacility" placeholder="Nome impianto e città"></label><label>Delegato<input id="mDelegate"></label><label>Arbitro 1<input id="mRef1"></label><label>Arbitro 2<input id="mRef2"></label></div><label class="away-check"><input id="homeAwayCheck" type="checkbox"><span>Fuori casa</span><small>Se attivo, la squadra viene considerata ospite e le calotte delle giocatrici diventano azzurre.</small></label><div class="home-away"><button id="homeBtn" class="selected" type="button">CASA</button><button id="awayBtn" type="button">FUORI CASA</button></div><div class="dialog-actions"><button class="secondary-btn" data-close="matchDialog">Annulla</button><button id="saveMatchData" class="primary-btn">Salva dati</button></div></div></dialog>
+
+<dialog id="convDialog"><div class="dialog wide"><button class="close" data-close="convDialog">×</button><span class="label">CONVOCAZIONE</span><h2>Scegli fino a 15 atlete</h2><div id="convList" class="conv-list"></div><div class="dialog-actions"><button class="primary-btn" id="saveConv">Salva convocazione</button></div></div></dialog>
+
+<dialog id="settingsDialog"><div class="dialog wide"><button class="close" data-close="settingsDialog">×</button><span class="label">PERSONALIZZA</span><h2>Squadra, avversaria e rosa</h2><div class="form-grid"><label>Nome società<input id="sTeam"></label><label>Nome avversaria<input id="sOpp"></label><label>Colore principale<input id="sColor" type="color"></label><label>Logo società<input id="sTeamLogo" type="file" accept="image/*"></label><label>Logo avversaria<input id="sOppLogo" type="file" accept="image/*"></label></div><div class="logo-previews"><div id="teamLogoPreview"></div><div id="oppLogoPreview"></div></div><div class="season-manager"><div class="manager-head"><div><h3>Gestione stagioni</h3><small>La partita corrente e le partite salvate sono associate alla stagione selezionata.</small></div><span id="settingsSeasonName" class="badge"></span></div></div><div class="roster-manager"><div class="manager-head"><h3>Archivio atlete</h3><button id="addAthlete" class="small-btn">+ Aggiungi</button></div><div id="rosterManager"></div></div><div class="dialog-actions"><button id="saveSettings" class="primary-btn">Salva personalizzazione</button></div></div></dialog>
+
+<dialog id="archiveDialog"><div class="dialog wide"><button class="close" data-close="archiveDialog">×</button><span class="label">ARCHIVIO</span><h2>Partite salvate</h2><div id="archiveDialogList"></div></div></dialog>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body></html>

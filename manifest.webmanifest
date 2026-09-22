@@ -1,0 +1,42 @@
+{
+  "name": "Referto Pallanuoto",
+  "short_name": "Referto",
+  "description": "Referto e statistiche per una squadra di pallanuoto",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "orientation": "any",
+  "lang": "it",
+  "categories": [
+    "sports",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "referto-pallanuoto",
+  "prefer_related_applications": false
+}
