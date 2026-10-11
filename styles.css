@@ -149,6 +149,18 @@ input,select,textarea{
   .ex-mark{width:18px!important;height:18px!important;min-width:18px!important;min-height:18px!important;font-size:10px}
 }
 
+/* v32 — statistiche complete e controlli evento ottimizzati per touch */
+.event-kind-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.event-kind-grid button{min-height:42px;white-space:normal}
+.goalkeeper-stats{display:grid;gap:8px;padding:0 14px 14px}
+.goalkeeper-card{display:grid;grid-template-columns:auto minmax(130px,1fr) repeat(3,minmax(72px,auto));align-items:center;gap:10px;padding:10px 12px;border:1px solid #263c55;border-radius:12px;background:#0d1b2d}
+.goalkeeper-card small,.keeper-number span{display:block;color:var(--muted);font-size:8px;letter-spacing:.08em}
+.keeper-number{text-align:center;padding:7px;border-radius:9px;background:#07111d}.keeper-number b{display:block;font-size:20px;margin-top:2px}.danger-number b{color:#ff7684}
+.match-logo-preview img{width:64px;height:64px;object-fit:contain;border-radius:12px;background:#fff;padding:4px}
+.multi-pdf-btn{margin-left:auto;white-space:nowrap}.multi-pdf-btn:disabled{opacity:.42;cursor:not-allowed}
+.multi-athlete-averages{margin-top:14px}.multi-athlete-averages .inner-title{padding-left:0;padding-right:0}.multi-athlete-averages th,.multi-athlete-averages td{white-space:nowrap}
+@media(max-width:620px){.event-kind-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.goalkeeper-card{grid-template-columns:auto 1fr repeat(3,54px);gap:6px;padding:8px}.keeper-number{padding:6px 3px}.keeper-number b{font-size:17px}.keeper-number span{font-size:6px}}
+
 
 /* v27 - visualizzazione espulsioni solo quando presenti */
 .ex-marks{display:flex!important;align-items:center;justify-content:flex-end;gap:5px;margin-left:8px;flex:none;width:auto!important}
