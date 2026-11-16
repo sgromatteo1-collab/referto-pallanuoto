@@ -203,7 +203,7 @@ const statColors={goal:'#4ade80',miss:'#ffb454',received:'#fb7185',save:'#67d3ff
 function statsSvgCopy(source){
  const sourceSvg=$(source);if(!sourceSvg)return '';
  let svg=sourceSvg.outerHTML.replace(/\sid="[^"]*"/g,m=>m.replace('id="','id="stat-'));
- svg=svg.replace(/url\(#/g,'url(#stat-').replace(/href="#/g,'href="#stat-').replace(/<svg /,'<svg aria-hidden="true" class="stats-map-plot" ');
+ svg=svg.replace(/url\(#/g,'url(#stat-').replace(/href="#/g,'href="#stat-').replace(/<svg /,`<svg aria-hidden="true" class="stats-map-plot" data-map-type="${source==='goalMapSvg'?'shot':'field'}" `);
  return svg.replace(/<\/svg>$/,'<g class="stats-map-points"></g></svg>');
 }
 function statsMapEvents(type){
