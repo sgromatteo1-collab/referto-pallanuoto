@@ -232,3 +232,24 @@ body{background:#07111d;color:var(--text)}
   .score-panel .period-select{padding:2px 10px 0}
   .score-panel .period-card{min-height:40px}
 }
+
+/* Match statistiche: porta interattiva e annullamento */
+.shot-map-launch{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:12px 0 16px}.shot-map-launch span,.map-note{font-size:12px;color:var(--muted,#71839b)}.goal-map-dialog{width:min(95vw,680px);max-width:680px}.goal-map-dialog .dialog{width:100%;max-height:90vh;overflow:auto}.goal-map-dialog #goalMapSvg{display:block;width:100%;height:auto;max-height:440px;cursor:crosshair;border-radius:14px;margin:15px auto;touch-action:manipulation;user-select:none;border:1px solid #bed7e6}.undo-event-banner{display:flex;gap:15px;justify-content:space-between;align-items:center;padding:14px 17px;border:1px solid #bdd5e6;border-radius:12px;margin-bottom:12px;background:#edf7fb;color:#163b55}.undo-event-banner.hidden{display:none}.undo-event-banner button{white-space:nowrap}.situation-card span{display:flex;justify-content:space-between;gap:10px}
+
+.opponent-scorer-wrap{display:flex;flex-direction:column;gap:7px;margin:12px 0;padding:12px;border:1px solid var(--border, #d7e3ed);border-radius:10px}.opponent-scorer-wrap input{max-width:140px;padding:9px;border-radius:8px;border:1px solid #afc3d5}.opponent-scorer-wrap small{opacity:.75;line-height:1.45}.opponent-scorer-wrap.hidden{display:none}
+
+/* Match 2026.11 · refined goal and interactive field */
+.goal-map-dialog .dialog,.field-map-dialog .dialog{background:linear-gradient(155deg,#122c46,#071626 86%);border:1px solid #315a76;box-shadow:0 28px 95px #0009}
+.goal-map-dialog h2,.field-map-dialog h2{margin:7px 0 12px;font-size:clamp(21px,4vw,29px);letter-spacing:-.025em}
+.goal-map-dialog #goalMapSvg{border:1px solid #326d88;box-shadow:0 16px 38px #0005;background:#082439;max-width:580px;touch-action:none;cursor:crosshair;transition:border-color .2s}
+.goal-map-dialog #goalMapSvg:hover{border-color:#65d7ec}
+.goal-map-dialog #goalMapInfo,.field-map-info{padding:12px 14px;border-radius:12px;background:#112b42;border:1px solid #32546d;color:#d4efff;min-height:43px;font-weight:700;text-align:center}
+.field-map-dialog #fieldMapSvg{display:block;height:min(58vh,510px);width:auto;max-width:100%;margin:14px auto;cursor:crosshair;touch-action:none;border-radius:20px;box-shadow:0 14px 40px #0008;border:1px solid #3d7695}
+.field-map-dialog #fieldMapSvg:hover{border-color:#6be7fa}
+#fieldPositionLabel,#shotPositionLabel{color:#afd7eb;font-size:12px;font-weight:700}
+.field-stats-table{min-width:480px}
+.field-map-dialog .dialog-actions,.goal-map-dialog .dialog-actions{flex-wrap:wrap}
+@media(max-width:530px){.field-map-dialog .dialog,.goal-map-dialog .dialog{padding:20px 15px}.field-map-dialog #fieldMapSvg{max-height:48vh}.goal-map-dialog #goalMapSvg{max-height:45vh}}
+
+/* Statistiche grafiche e esportazione individuale */
+.stats-map-layout{display:grid;grid-template-columns:minmax(200px,1fr) minmax(200px,1fr);gap:18px;align-items:start;margin:10px 0 20px}.stats-map-card{background:linear-gradient(150deg,#102b42,#081c2b);border:1px solid #31526b;border-radius:16px;padding:12px;color:#e6f4ff}.stats-map-card h3{font-size:13px;letter-spacing:.04em;margin:0 0 12px}.stats-map-card svg{display:block;max-width:100%;height:auto;max-height:440px;margin:auto}.stats-map-card .legend{font-size:12px;line-height:1.7;margin-top:8px}.stats-map-card .legend span{display:inline-block;margin-right:12px}.stats-map-plot{max-width:520px;margin:auto}.stats-map-options{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:12px 0}.stats-map-options label,.player-export-controls label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#b5d5ea}.stats-map-options select,.player-export-controls select{background:#0f293e;color:#f4fbff;border:1px solid #416780;border-radius:9px;padding:10px;max-width:100%}.stats-map-count{font-size:13px;color:#bed4e4}.stats-dot-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px}.stats-dot-legend b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}.player-export-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:14px 0}.player-export-controls label{flex:1;min-width:160px}.player-report-preview{font-size:13px;color:#d4e8f8;line-height:1.6}.stats-map-card .empty{padding:20px 6px}@media(max-width:700px){.stats-map-layout{grid-template-columns:1fr}.player-export-controls>button{flex:1}}

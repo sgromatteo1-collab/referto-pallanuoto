@@ -37,32 +37,112 @@
   <section class="timeouts glass"><div class="section-title"><div><span class="label">TIME-OUT</span><h2>Massimo 2 per partita</h2></div><span class="muted">Inserisci tempo e minuto</span></div><div class="timeout-grid" id="timeoutGrid"></div></section>
 
   <section class="glass roster"><div class="section-title"><div><span class="label">ROSA CONVOCATA</span><h2>Atlete</h2><p>Tocca un'atleta per registrare un evento.</p></div><button id="manageRosterBtn" class="small-btn">Gestisci rosa</button></div><div id="players" class="players"></div></section>
-  <section class="glass events"><div class="section-title"><div><span class="label">LIVE</span><h2>Eventi</h2></div><span id="eventCount" class="badge">0</span></div><div id="eventLog" class="event-log"></div></section>
+  <div id="undoEventBanner" class="undo-event-banner hidden"><span>Evento eliminato.</span><button id="undoEventBtn" class="small-btn" type="button">↶ Annulla eliminazione</button></div><section class="glass events"><div class="section-title"><div><span class="label">LIVE</span><h2>Eventi</h2></div><span id="eventCount" class="badge">0</span></div><div id="eventLog" class="event-log"></div></section>
 </section>
 
 <section id="statsPage" class="page hidden">
  <div class="stats-head glass"><div><span class="label">ANALISI</span><h2>Statistiche partita</h2><p>Riepilogo automatico dagli eventi registrati.</p></div><div class="export-actions"><button id="exportPdfBtn" class="action primary">▣ PDF A4</button><button id="exportExcelBtn" class="action">▤ Excel</button><button id="shareBtn" class="action">Condividi</button></div></div>
- <section class="glass saved-stats-section"><div class="section-title"><div><span class="label">STORICO</span><h2>Statistiche di più partite</h2><p>Seleziona le partite salvate che vuoi confrontare.</p></div></div><div id="savedStatsMatches" class="saved-stats-matches"></div><div id="savedStatsSummary" class="stats-summary compact"></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Avversaria</th><th>Goal fatti</th><th>Goal subiti</th><th>Tiri</th><th>Assist goal</th><th>Esp. contro</th><th>Esp. a favore</th></tr></thead><tbody id="savedStatsTable"></tbody></table></div></section>
- <div id="statsSummary" class="stats-summary"></div>
+ <section class="glass saved-stats-section"><div class="section-title"><div><span class="label">STORICO</span><h2>Statistiche di più partite</h2><p>Seleziona le partite salvate che vuoi confrontare.</p></div></div><div id="savedStatsMatches" class="saved-stats-matches"></div><div id="savedStatsSummary" class="stats-summary compact"></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Avversaria</th><th>Goal fatti</th><th>Goal subiti</th><th>Tiri</th><th>Sbagliati</th><th>Fuori</th><th>Parate</th><th>Assist goal</th><th>Esp. contro</th><th>Esp. a favore</th></tr></thead><tbody id="savedStatsTable"></tbody></table></div></section>
+ <section class="glass player-export-section"><div class="section-title"><div><span class="label">REPORT ATLETE</span><h2>Esportazione individuale</h2><p>Partita aperta oppure tutte le partite salvate in archivio, anche di stagioni diverse. L'archivio non include automaticamente la partita in corso per evitare doppi conteggi.</p></div></div><div class="player-export-controls"><label>Atleta<select id="playerReportSelect"></select></label><label>Periodo<select id="playerReportScope"><option value="match">Partita corrente</option><option value="global">Globale · archivio completo</option></select></label><button id="playerReportPdf" class="action primary">▣ PDF atleta</button><button id="playerReportCsv" class="action">▤ CSV / Excel atleta</button></div><div id="playerReportPreview" class="player-report-preview"></div></section><div id="statsSummary" class="stats-summary"></div><section class="glass"><div class="section-title"><div><span class="label">ANALISI TIRI</span><h2>Posizionamento sulla porta</h2><p>Conteggi per zona, aggiornati automaticamente per atlete e squadra.</p></div></div><div id="shotMapStats"></div></section><section class="glass"><div class="section-title"><div><span class="label">MAPPA CONTROFALLI</span><h2>Distribuzione sul campo</h2><p>Zone dei controfalli guadagnati e subiti, aggregate dagli eventi.</p></div></div><div id="counterfoulMapStats"></div></section><section class="glass"><div class="section-title"><div><span class="label">AVVERSARIE</span><h2>Marcatrici avversarie</h2><p>Goal subiti raggruppati per numero di calotta avversaria (senza duplicare il punteggio).</p></div></div><div id="opponentScorersStats"></div></section>
  <section class="glass"><div class="section-title"><div><span class="label">PARZIALI</span><h2>Risultati per tempo</h2></div></div><div id="statsPeriods" class="period-stats"></div></section>
  <section class="glass"><div class="section-title"><div><span class="label">PORTIERI</span><h2>Goal subiti</h2><p>Dettaglio a uomini pari e in uomo in meno.</p></div></div><div id="goalkeeperStats" class="goalkeeper-stats"></div></section>
  <section class="glass"><div class="section-title"><div><span class="label">SITUAZIONI</span><h2>Goal fatti e sbagliati</h2></div></div><div id="situationStats" class="situation-stats"></div></section>
  <section class="glass"><div class="section-title"><div><span class="label">DISCIPLINA</span><h2>Espulsioni prese dalle atlete</h2></div></div><div id="exclusionStats" class="exclusion-stats"></div></section>
- <section class="glass"><div class="section-title"><div><span class="label">ATLETE</span><h2>Statistiche individuali</h2></div></div><div class="table-scroll"><table><thead><tr><th>Atleta</th><th>Goal</th><th>Tiri</th><th>%</th><th>+ uomo</th><th>Pari</th><th>Controp.</th><th>Assist</th><th>Esp.</th><th>Palle +</th><th>Palle −</th><th>Controfalli +</th><th>Controfalli −</th></tr></thead><tbody id="statsTable"></tbody></table></div></section>
+ <section class="glass"><div class="section-title"><div><span class="label">ATLETE</span><h2>Statistiche individuali</h2></div></div><div class="table-scroll"><table><thead><tr><th>Atleta</th><th>Goal</th><th>Subiti</th><th>Tiri</th><th>Sbagliati</th><th>Fuori</th><th>Ricevuti</th><th>Parate</th><th>%</th><th>+ uomo</th><th>Pari</th><th>Controp.</th><th>Assist</th><th>Esp.</th><th>Palle +</th><th>Palle −</th><th>Controfalli +</th><th>Controfalli −</th></tr></thead><tbody id="statsTable"></tbody></table></div></section>
 </section>
 
 <section id="archivePage" class="page hidden"><section class="glass"><div class="section-title"><div><span class="label">ARCHIVIO · <span id="currentSeasonLabel">STAGIONE</span></span><h2>Partite salvate</h2><p>Apri, elimina o esporta i dati della stagione selezionata.</p></div></div><div id="archiveList"></div></section></section>
 </main>
 
 <dialog id="eventDialog"><div class="dialog"><button class="close" data-close="eventDialog">×</button><div class="athlete-head"><span id="eventCap" class="cap">1</span><div><span class="label">EVENTO</span><h2 id="eventAthlete">Atleta</h2><small id="eventRole">Atleta</small></div></div><div class="segmented event-kind-grid" id="eventKinds"><button data-kind="shot" class="selected">TIRO / GOAL</button><button data-kind="exclusion">ESPULSIONE</button><button data-kind="assist">ASSIST</button><button data-kind="ball">PALLA</button><button data-kind="counterfoul">CONTROFALLO</button></div>
-<div id="shotPanel"><div class="label block">ESITO</div><div class="choice-grid" id="shotChoices"></div><div class="label block">SITUAZIONE</div><div class="choice-grid" id="situationChoices"><button data-situation="even">UOMINI PARI</button><button data-situation="power">SUPERIORITÀ</button><button data-situation="manDown">UOMO IN MENO</button><button data-situation="counter">CONTROPIEDE</button></div></div>
+<div id="shotPanel"><div class="label block">ESITO</div><div class="choice-grid" id="shotChoices"></div><label id="opponentScorerWrap" class="opponent-scorer-wrap hidden"><span>Calotta avversaria che ha segnato</span><input id="opponentScorerCap" type="number" min="1" max="99" step="1" inputmode="numeric" placeholder="Es. 7"><small>Inserisci la calotta della giocatrice avversaria: il gol viene attribuito al nostro portiere e alla marcatrice avversaria, senza contarlo due volte.</small></label><div class="shot-map-launch"><button type="button" id="openGoalMap" class="small-btn">◎ Apri porta · indica punto tiro</button><span id="shotPositionLabel">Posizione non indicata</span></div><div class="label block">SITUAZIONE</div><div class="choice-grid" id="situationChoices"><button data-situation="even">UOMINI PARI</button><button data-situation="power">SUPERIORITÀ</button><button data-situation="manDown">UOMO IN MENO</button><button data-situation="counter">CONTROPIEDE</button></div></div>
 <div id="exclusionPanel" class="hidden"><div class="label block">ESPULSIONE</div><div class="choice-grid exclusion-side"><button data-exclusion-side="against">PRESA CONTRO</button><button data-exclusion-side="for">PRESA A FAVORE</button></div><div class="label block">SANZIONE</div><div class="choice-grid" id="sanctionChoices"><button data-sanction="ET">E.T.</button><button data-sanction="TR">T.R.</button><button data-sanction="EDCS">E.D. C.S.</button><button data-sanction="EDSS">E.D. S.S.</button></div><div class="event-warning">Le espulsioni <b>prese contro</b> vengono conteggiate nel controllo <b>3/3</b> dell’atleta.</div></div>
 <div id="assistPanel" class="hidden"><div class="label block">TIPO DI ASSIST</div><div class="choice-grid assist-grid"><button class="selected" data-assist="goal">ASSIST GOAL</button><button data-assist="wrong">ASSIST SBAGLIATO</button><button data-assist="exclusion">ASSIST PER ESPULSIONE</button><button data-assist="penalty">ASSIST PER RIGORE</button></div></div>
 <div id="ballPanel" class="hidden"><div class="label block">GESTIONE PALLA</div><div class="choice-grid"><button data-ball="won">PALLA GUADAGNATA</button><button data-ball="lost">PALLA PERSA</button></div></div>
-<div id="counterfoulPanel" class="hidden"><div class="label block">CONTROFALLO</div><div class="choice-grid"><button data-counterfoul="won">GUADAGNATO</button><button data-counterfoul="suffered">SUBITO</button></div></div>
+<div id="counterfoulPanel" class="hidden"><div class="label block">CONTROFALLO</div><div class="choice-grid"><button data-counterfoul="won">GUADAGNATO</button><button data-counterfoul="suffered">SUBITO</button></div><div class="shot-map-launch"><button type="button" id="openFieldMap" class="small-btn">⌖ Apri campo · punto controfallo</button><span id="fieldPositionLabel">Posizione non indicata</span></div></div>
 <div class="two-col"><label><span>Tempo</span><select id="eventPeriod"><option value="1">1° tempo</option><option value="2">2° tempo</option><option value="3">3° tempo</option><option value="4">4° tempo</option></select></label><label><span>Minuto</span><input id="eventTime" maxlength="5" inputmode="numeric" placeholder="04:20"></label></div>
 <label><span>Nota</span><input id="eventNote" placeholder="Facoltativa"></label><div class="dialog-actions"><button id="deleteEvent" class="danger-btn">Elimina</button><button id="saveEvent" class="primary-btn">Salva evento</button></div></div></dialog>
 
+<dialog id="goalMapDialog" class="goal-map-dialog"><div class="dialog wide"><button class="close" type="button" data-close="goalMapDialog">×</button><span class="label">LOCALIZZAZIONE TIRO</span><h2>Seleziona il punto sulla porta</h2><p class="map-note">Vista frontale: tocca nella rete per indicare la zona, oppure all’esterno per un tiro fuori. La porta è divisa in sei zone.</p><svg id="goalMapSvg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porta pallanuoto, scegli punto del tiro">
+<defs>
+ <linearGradient id="goalSky" x2="0" y2="1"><stop stop-color="#102b47"/><stop offset="1" stop-color="#126f93"/></linearGradient>
+ <linearGradient id="goalWater" x2="0" y2="1"><stop stop-color="#2fb9dc"/><stop offset="1" stop-color="#096587"/></linearGradient>
+ <linearGradient id="goalPost" x2="1" y2="0"><stop stop-color="#dae9ee"/><stop offset="0.5" stop-color="#fff"/><stop offset="1" stop-color="#a6c6d8"/></linearGradient>
+ <pattern id="goalMesh" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0H5M0 0V5" fill="none" stroke="#caeaf1" stroke-width=".32" opacity=".58"/></pattern>
+ <pattern id="goalDiagonal" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 9L9 0" stroke="#91cadc" stroke-width=".24" opacity=".28"/></pattern>
+ <filter id="goalShadow"><feDropShadow dx="0" dy="1.5" stdDeviation="1.4" flood-opacity=".45"/></filter>
+</defs>
+<rect width="100" height="100" rx="4" fill="url(#goalSky)"/>
+<path d="M0 75Q20 72 40 76T100 74V100H0Z" fill="url(#goalWater)"/>
+<path d="M0 76Q14 73 27 75T52 76T79 75T100 74V79Q83 82 65 79T29 79T0 80Z" fill="#5bdbf0" opacity=".20"/>
+<path d="M0 85Q15 82 28 85T56 85T84 84T100 85" fill="none" stroke="#b4f3fb" stroke-width=".65" opacity=".48"/>
+<path d="M0 95Q17 92 33 95T64 95T100 94" fill="none" stroke="#8ce6f5" stroke-width=".47" opacity=".32"/>
+<g opacity=".25" fill="none" stroke="#b7f5fc" stroke-width=".5"><path d="M0 84Q14 81 29 84T59 84T100 83"/><path d="M0 91Q23 88 43 91T100 90"/></g>
+<!-- Roof and deep net give the goal volume -->
+<path d="M12 16L19 22H81L88 16L88 79H12Z" fill="#15364e" opacity=".85"/>
+<path d="M19 22H81V75H19Z" fill="url(#goalMesh)"/>
+<path d="M19 22H81V75H19Z" fill="url(#goalDiagonal)"/>
+<path d="M12 16L19 22M88 16L81 22M12 79L19 75M88 79L81 75" stroke="#b1dae5" stroke-width=".6" opacity=".8"/>
+<!-- Subtle six-zone guides -->
+<g fill="none" stroke="#83c8df" stroke-width=".45" stroke-dasharray="1.4 1.2" opacity=".65"><path d="M37 18V77M63 18V77M14 47H86"/></g>
+<g filter="url(#goalShadow)"><path d="M12 79V16H88V79" stroke="#112e43" stroke-width="5.5" fill="none" stroke-linejoin="round"/><path d="M12 79V16H88V79" stroke="url(#goalPost)" stroke-width="3.4" fill="none" stroke-linejoin="round"/></g>
+<!-- Red polo goal bands -->
+<g stroke="#ed4650" stroke-width="3.5"><path d="M12 18V28M12 41V50M12 63V72M88 18V28M88 41V50M88 63V72M26 16H37M49 16H61M73 16H85"/></g>
+<path d="M9 79H91" stroke="#dcf8ff" stroke-width="1.2" opacity=".75"/>
+<text x="50" y="9" text-anchor="middle" fill="#dbf8ff" font-size="4.2" font-weight="800" letter-spacing="1">FUORI</text>
+<g fill="#c6eff8" font-size="3.5" font-weight="700"><text x="5" y="48" text-anchor="middle" transform="rotate(-90 5 48)">FUORI</text><text x="95" y="48" text-anchor="middle" transform="rotate(90 95 48)">FUORI</text></g>
+<circle id="goalMapDot" cx="50" cy="30" r="3.8" fill="#f9cb55" stroke="#fff" stroke-width="1.3" style="display:none;pointer-events:none"/>
+<circle id="goalMapDotInner" cx="50" cy="30" r="1.35" fill="#152f48" style="display:none;pointer-events:none"/>
+</svg><div id="goalMapInfo" class="map-note">Seleziona un punto</div><div class="dialog-actions"><button type="button" id="clearShotPosition" class="secondary-btn">Cancella posizione</button><button type="button" id="confirmShotPosition" class="primary-btn">Conferma posizione</button></div></div></dialog>
+<dialog id="fieldMapDialog" class="field-map-dialog"><div class="dialog wide"><button class="close" type="button" data-close="fieldMapDialog">×</button><span class="label">MAPPA CONTROFALLI</span><h2>Indica dove è successo</h2><p class="map-note">Campo visto dall’alto, con porte, metà campo e riferimenti laterali colorati. La porta avversaria è in alto e la nostra in basso. Tocca il punto del controfallo: sarà registrato nelle statistiche individuali e di squadra.</p><svg id="fieldMapSvg" viewBox="0 0 320 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Campo di pallanuoto in vista dall’alto con porte, linee e zone. Tocca il punto del controfallo">
+<defs>
+ <linearGradient id="fieldWater" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1595c5"/><stop offset=".48" stop-color="#0873a8"/><stop offset="1" stop-color="#034c85"/></linearGradient>
+ <pattern id="fieldWave" width="34" height="30" patternUnits="userSpaceOnUse"><path d="M0 13Q8 8 17 13T34 13M0 28Q8 23 17 28T34 28" fill="none" stroke="#e1fcff" stroke-width=".85" opacity=".16"/></pattern>
+ <pattern id="fieldNet" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0L4 4M4 0L0 4" stroke="#c3ddec" stroke-width=".55"/></pattern>
+ <linearGradient id="fieldRim" x1="0" x2="1"><stop stop-color="#e4edf4"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#9ab4c4"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="320" height="520" rx="20" fill="#092438"/>
+<rect x="16" y="25" width="288" height="470" rx="12" fill="#0b405f" stroke="#335b71" stroke-width="2"/>
+<rect x="30" y="40" width="260" height="440" fill="url(#fieldWater)" stroke="#d5f3ff" stroke-width="2.2"/>
+<rect x="30" y="40" width="260" height="440" fill="url(#fieldWave)" pointer-events="none"/>
+<!-- Guide lines and markings, aligned to the reference field diagram -->
+<g fill="none" stroke-linecap="round" pointer-events="none">
+ <path d="M30 40H290M30 480H290" stroke="#fff" stroke-width="3"/>
+ <path d="M30 260H290" stroke="#e8f9ff" stroke-width="2.4"/>
+ <circle cx="160" cy="260" r="27" stroke="#e8f9ff" stroke-width="2.1"/>
+ <circle cx="160" cy="260" r="3" fill="#fff"/>
+ <path d="M30 83H290M30 437H290" stroke="#f36d74" stroke-width="2.4" stroke-dasharray="8 5" opacity=".85"/>
+ <path d="M30 130H290M30 390H290" stroke="#f7d548" stroke-width="2.4" stroke-dasharray="8 5" opacity=".85"/>
+ <path d="M30 175H290M30 345H290" stroke="#f5faff" stroke-width="1.4" stroke-dasharray="4 6" opacity=".45"/>
+</g>
+<!-- Lane rope colour bands on both sides -->
+<g stroke-width="6" stroke-linecap="butt" pointer-events="none">
+ <path d="M30 40V83M290 40V83M30 437V480M290 437V480" stroke="#f15767"/>
+ <path d="M30 83V130M290 83V130M30 390V437M290 390V437" stroke="#ffde50"/>
+ <path d="M30 130V390M290 130V390" stroke="#f5fafc"/>
+</g>
+<!-- Field distances -->
+<g font-family="system-ui,sans-serif" font-size="9" font-weight="800" text-anchor="middle" pointer-events="none">
+ <text x="18" y="89" fill="#ff9aa7">2m</text><text x="18" y="136" fill="#ffe08b">5m</text>
+ <text x="18" y="393" fill="#ffe08b">5m</text><text x="18" y="440" fill="#ff9aa7">2m</text>
+ <text x="160" y="249" font-size="8" fill="#d7f6ff">METÀ CAMPO</text>
+</g>
+<!-- Two goal frames in plan -->
+<g pointer-events="none">
+ <rect x="130" y="28" width="60" height="15" rx="1.5" fill="url(#fieldNet)" stroke="#f7ffff" stroke-width="3"/>
+ <path d="M130 41H190" stroke="#ff5b69" stroke-width="3.7"/>
+ <rect x="130" y="477" width="60" height="15" rx="1.5" fill="url(#fieldNet)" stroke="#f7ffff" stroke-width="3"/>
+ <path d="M130 479H190" stroke="#ff5b69" stroke-width="3.7"/>
+</g>
+<g font-family="system-ui,sans-serif" font-size="10" font-weight="800" letter-spacing=".3" text-anchor="middle" fill="#e6faff" pointer-events="none">
+ <text x="160" y="16">PORTA AVVERSARIA</text><text x="160" y="510">NOSTRA PORTA</text>
+</g>
+<g font-family="system-ui,sans-serif" font-weight="800" text-anchor="middle" fill="#e8faff" opacity=".30" font-size="14" pointer-events="none">
+ <text x="160" y="205">ATTACCO</text><text x="160" y="325">DIFESA</text>
+</g>
+<circle id="fieldMapDotHalo" cx="160" cy="260" r="14" fill="#ffdd63" opacity=".28" style="display:none;pointer-events:none"/>
+<circle id="fieldMapDot" cx="160" cy="260" r="6.5" fill="#ffce48" stroke="#ffffff" stroke-width="2.5" style="display:none;pointer-events:none"/>
+</svg><div class="field-map-info" id="fieldMapInfo">Tocca il campo per segnare la posizione</div><div class="dialog-actions"><button type="button" id="clearFieldPosition" class="secondary-btn">Rimuovi posizione</button><button type="button" id="confirmFieldPosition" class="primary-btn">Conferma posizione</button></div></div></dialog>
 <dialog id="matchDialog"><div class="dialog wide"><button class="close" data-close="matchDialog">×</button><span class="label">ANAGRAFICA INCONTRO</span><h2>Dati della singola partita</h2><div class="form-grid"><label>Nome avversaria<input id="mOpponent" placeholder="Nome squadra avversaria"></label><label>Logo avversaria<input id="mOppLogo" type="file" accept="image/*"></label><div id="matchOppLogoPreview" class="match-logo-preview span2"></div><label>Data<input id="mDate" type="date"></label><label>Ora partita<input id="mTime" type="time"></label><label>Tipo campionato<select id="mCompetitionType"><option value="">Seleziona</option><option>Campionato</option><option>Coppa Italia</option><option>Supercoppa</option><option>Play-off</option><option>Play-out</option><option>Torneo</option><option>Amichevole</option><option>Altro</option></select></label><label>Campionato / Girone<input id="mCompetition" placeholder="Serie A1 Femminile · Girone ..."></label><label class="span2">Incontro<input id="mEncounter" placeholder="Squadra di casa vs Squadra ospite"></label><label class="span2">Impianto / Piscina<input id="mFacility" placeholder="Nome impianto e città"></label><label>Delegato<input id="mDelegate"></label><label>Arbitro 1<input id="mRef1"></label><label>Arbitro 2<input id="mRef2"></label></div><label class="away-check"><input id="homeAwayCheck" type="checkbox"><span>Fuori casa</span><small>Se attivo, la squadra viene considerata ospite e l’ordine delle squadre viene invertito automaticamente.</small></label><div class="home-away"><button id="homeBtn" class="selected" type="button">CASA</button><button id="awayBtn" type="button">FUORI CASA</button></div><div class="dialog-actions"><button class="secondary-btn" data-close="matchDialog">Annulla</button><button id="saveMatchData" class="primary-btn">Salva dati</button></div></div></dialog>
 
 <dialog id="convDialog"><div class="dialog wide"><button class="close" data-close="convDialog">×</button><span class="label">CONVOCAZIONE</span><h2>Scegli fino a 15 atlete</h2><div id="convList" class="conv-list"></div><div class="dialog-actions"><button class="primary-btn" id="saveConv">Salva convocazione</button></div></div></dialog>
